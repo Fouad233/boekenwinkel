@@ -25,10 +25,13 @@ function showMessage(element, message, type = "") {
 async function apiRequest(path, options = {}) {
     const headers = new Headers(options.headers || {});
 
-    if (options.body && !(options.body instanceof FormData)) {
-        headers.set("Content-Type", "application/json");
-    }
-
+if (
+    options.body &&
+    !(options.body instanceof FormData) &&
+    !(options.body instanceof URLSearchParams)
+) {
+    headers.set("Content-Type", "application/json");
+}
     if (accessToken) {
         headers.set("Authorization", `Bearer ${accessToken}`);
     }
@@ -43,13 +46,25 @@ async function apiRequest(path, options = {}) {
         ? await response.json()
         : await response.text();
 
-    if (!response.ok) {
-        const detail = typeof data === "object" && data !== null
-            ? data.detail
-            : null;
+if (!response.ok) {
+    const detail = typeof data === "object" && data !== null
+        ? data.detail
+        : null;
 
-        throw new Error(detail || `Fout: HTTP ${response.status}`);
+    let message;
+
+    if (Array.isArray(detail)) {
+        message = detail
+            .map(error => error.msg || JSON.stringify(error))
+            .join(", ");
+    } else if (typeof detail === "string") {
+        message = detail;
+    } else {
+        message = `Fout: HTTP ${response.status}`;
     }
+
+    throw new Error(message);
+}
 
     return data;
 }
@@ -446,7 +461,10 @@ async function loadReviews(bookId) {
 }
 
 async function submitReview(event) {
+    async function submitReview(event) {
     event.preventDefault();
+
+    const form = event.currentTarget;
 
     if (!accessToken || !selectedBookId) {
         showMessage(
@@ -457,7 +475,7 @@ async function submitReview(event) {
         return;
     }
 
-    const formData = new FormData(event.currentTarget);
+    const formData = new FormData(form);
 
     const reviewData = {
         book_id: selectedBookId,
@@ -471,7 +489,7 @@ async function submitReview(event) {
             body: JSON.stringify(reviewData)
         });
 
-        event.currentTarget.reset();
+        form.reset();
 
         showMessage(
             reviewsMessage,
@@ -481,8 +499,13 @@ async function submitReview(event) {
 
         await loadReviews(selectedBookId);
     } catch (error) {
-        showMessage(reviewsMessage, error.message, "error");
+        showMessage(
+            reviewsMessage,
+            error.message,
+            "error"
+        );
     }
+}
 }
 
 document.getElementById("review-form")
