@@ -7,6 +7,8 @@ from dotenv import load_dotenv
 load_dotenv()
 from routers.users import router as users_router
 from routers.reservations import router as reservations_router
+from routers.purchases import router as purchases_router
+from routers.reviews import router as reviews_router
 
 app = FastAPI(title="Boekenwinkel API")
 
@@ -15,6 +17,8 @@ Base.metadata.create_all(bind=engine)
 app.include_router(books_router)
 app.include_router(users_router)
 app.include_router(reservations_router)
+app.include_router(purchases_router)
+app.include_router(reviews_router)
 
 @app.get("/")
 def home():
