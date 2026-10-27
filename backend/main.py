@@ -9,8 +9,19 @@ from routers.users import router as users_router
 from routers.reservations import router as reservations_router
 from routers.purchases import router as purchases_router
 from routers.reviews import router as reviews_router
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="Boekenwinkel API")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5500",
+        "http://127.0.0.1:5500",
+    ],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 Base.metadata.create_all(bind=engine)
 

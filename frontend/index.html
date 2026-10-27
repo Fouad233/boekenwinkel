@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boekenwinkel</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <a href="#" class="logo">Boeken<span>winkel</span></a>
+
+            <div class="nav-links">
+                <a href="#catalogus">Catalogus</a>
+                <a href="#account">Account</a>
+                <button id="logout-button" class="button secondary hidden">
+                    Uitloggen
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <p class="eyebrow">JOUW VOLGENDE FAVORIETE BOEK</p>
+            <h1>Verhalen die<br>je <span>bijblijven.</span></h1>
+            <p>Ontdek boeken, reserveer je favorieten en deel je mening.</p>
+            <a href="#catalogus" class="button">Ontdek de catalogus</a>
+        </section>
+
+        <section id="catalogus" class="section">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">ONTDEK ONZE COLLECTIE</p>
+                    <h2>Onze boeken</h2>
+                </div>
+                <button id="refresh-books" class="button secondary">
+                    Vernieuwen
+                </button>
+            </div>
+
+            <p id="catalog-message" class="message" aria-live="polite"></p>
+            <div id="books-container" class="books-grid"></div>
+        </section>
+
+        <section id="account" class="section account-section">
+            <div>
+                <p class="eyebrow">JOUW ACCOUNT</p>
+                <h2>Welkom bij de boekenwinkel</h2>
+                <p>Maak een account aan of log in om boeken te reserveren.</p>
+                <p id="account-message" class="message" aria-live="polite"></p>
+            </div>
+
+            <div class="forms-grid">
+                <form id="register-form" class="card">
+                    <h3>Account aanmaken</h3>
+
+                    <label for="register-username">Gebruikersnaam</label>
+                    <input id="register-username" name="username"
+                           minlength="3" maxlength="50" required>
+
+                    <label for="register-email">E-mailadres</label>
+                    <input id="register-email" name="email"
+                           type="email" required>
+
+                    <label for="register-password">Wachtwoord</label>
+                    <input id="register-password" name="password"
+                           type="password" minlength="8" required>
+
+                    <button type="submit" class="button">Registreren</button>
+                </form>
+
+                <form id="login-form" class="card">
+                    <h3>Inloggen</h3>
+
+                    <label for="login-username">Gebruikersnaam</label>
+                    <input id="login-username" name="username" required>
+
+                    <label for="login-password">Wachtwoord</label>
+                    <input id="login-password" name="password"
+                           type="password" required>
+
+                    <button type="submit" class="button">Inloggen</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="my-reservations" class="section hidden">
+            <p class="eyebrow">JOUW ACCOUNT</p>
+            <h2>Mijn reserveringen</h2>
+            <p id="reservations-message" class="message" aria-live="polite"></p>
+            <div id="reservations-container" class="reservations-list"></div>
+        </section>
+        <section id="my-purchases" class="section hidden">
+    <p class="eyebrow">JOUW ACCOUNT</p>
+    <h2>Mijn gekochte boeken</h2>
+
+    <p id="purchases-message" class="message" aria-live="polite"></p>
+
+    <div id="purchases-container" class="books-grid"></div>
+</section>
+<section id="book-details" class="section hidden">
+    <p class="eyebrow">BOEKDETAILS</p>
+    <h2 id="detail-title">Boektitel</h2>
+    <p id="detail-author" class="book-author"></p>
+    <p id="detail-description"></p>
+
+    <h3>Reviews</h3>
+    <p id="reviews-message" class="message" aria-live="polite"></p>
+    <div id="reviews-container" class="reservations-list"></div>
+
+    <div id="review-form-container" class="card hidden">
+        <h3>Schrijf een review</h3>
+
+        <form id="review-form">
+            <label for="review-score">Score (1–5)</label>
+            <select id="review-score" name="score" required>
+                <option value="5">5 sterren</option>
+                <option value="4">4 sterren</option>
+                <option value="3">3 sterren</option>
+                <option value="2">2 sterren</option>
+                <option value="1">1 ster</option>
+            </select>
+
+            <label for="review-text">Je beoordeling</label>
+            <textarea id="review-text" name="text"
+                      minlength="1" maxlength="2000"
+                      required></textarea>
+
+            <button type="submit" class="button">Review plaatsen</button>
+        </form>
+    </div>
+</section>
+    </main>
+
+    <footer>
+        <p>Boekenwinkel · Ontdek je volgende verhaal.</p>
+    </footer>
+</body>
+</html>
